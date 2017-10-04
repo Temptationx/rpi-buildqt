@@ -36,9 +36,9 @@ else
 fi
 
 ./configure -release -opengl es2 -no-opengles3 -no-xcb -eglfs -device ${DEVICE} \
-    -device-option CROSS_COMPILE=${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf- \
+    -device-option CROSS_COMPILE=${RPIDEV_TOOLS}/arm-linux-gnueabihf- \
     -sysroot ${RPIDEV_SYSROOT} -opensource -confirm-license -make libs \
-    -prefix ${QT_DEVICE_DIR} -extprefix ${QT_INSTALL_DIR} -hostprefix ${QT_INSTALL_DIR_HOST} -v
+    -prefix ${QT_DEVICE_DIR} -extprefix ${QT_INSTALL_DIR} -hostprefix ${QT_INSTALL_DIR_HOST} -v -force-debug-info -nomake examples -nomake tests -openssl-linked -no-use-gold-linker
 
 confirm "Continue building?"
 

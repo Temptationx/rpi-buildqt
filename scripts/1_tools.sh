@@ -9,21 +9,42 @@ source $SCRIPTDIR/env.sh
 mkdir -p $(dirname $(realpath ${RPIDEV_TOOLS}))
 
 echo
-echo == Download tools ==
+echo == Fix GCC and G++ ==
 echo
-cloneOrPull https://github.com/raspberrypi/tools.git ${RPIDEV_TOOLS} master
+if [ ! -f /usr/bin/arm-linux-gnueabihf-gcc.real ]; then
+	mv /usr/bin/arm-linux-gnueabihf-gcc /usr/bin/arm-linux-gnueabihf-gcc.real
+fi
+if [ ! -f /usr/bin/arm-linux-gnueabihf-g++.real ]; then
+	mv /usr/bin/arm-linux-gnueabihf-g++ /usr/bin/arm-linux-gnueabihf-g++.real
+fi
+
+cp ${SCRIPTDIR}/resources/gcc.sh /usr/bin/arm-linux-gnueabihf-gcc
+cp ${SCRIPTDIR}/resources/gcc.sh /usr/bin/arm-linux-gnueabihf-g++
+
+chmod +x /usr/bin/arm-linux-gnueabihf-gcc
+chmod +x /usr/bin/arm-linux-gnueabihf-g++
 
 echo
-echo == Fix tools ==
+echo == Fix ld ==
 echo
-mv ${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc ${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc.real
-mv ${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++ ${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++.real
+if [ ! -f /usr/bin/ld.real ]; then
+	mv /usr/bin/ld /usr/bin/ld.real
+fi
 
-cp ${SCRIPTDIR}/resources/gcc.sh ${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc
-cp ${SCRIPTDIR}/resources/gcc.sh ${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++
+cp ${SCRIPTDIR}/resources/ld.sh /usr/bin/ld
 
-chmod +x ${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc
-chmod +x ${RPIDEV_TOOLS}/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++
+chmod +x /usr/bin/ld
+
+echo
+echo == Fix as ==
+echo
+mkdir -p /usr/bin/arm-linux-gnueabihf/6
+ln -s /usr/bin/arm-linux-gnueabihf-as /usr/bin/arm-linux-gnueabihf/6/as
+
+echo 
+echo == Fix asm header ==
+echo 
+ln -s /usr/include/asm-generic /usr/include/asm
 
 echo
 echo == Tools ok ==
