@@ -1,7 +1,7 @@
 # Cross compiling QT width piomxtextures
 
 Based on https://wiki.qt.io/RaspberryPi2EGLFS, https://thebugfreeblog.blogspot.com and https://github.com/raspberrypi/tools
-
+mysql-server mysql-workbench nodejs npm nodejs-legacy libgl1-mesa-dev libssl-dev devscripts dpkg-dev cdbs debhelper dh-autoreconf libev-dev libpcre3-dev pkg-config openjdk-8-jre ibus-sunpinyin ubuntu-restricted-extras python-pip 
 ## Notes
  - Uses the `arm-rpi-4.9.3-linux-gnueabihf` toolchain
  - Tested only on RPi 3 (but should support pi1/pi2 just fine)
